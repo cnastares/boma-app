@@ -1,0 +1,25 @@
+{
+  "name": "adfox/point-vault",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\PointVault\\": "src/",
+      "Adfox\\PointVault\\Database\\Factories\\": "database/factories/",
+      "Adfox\\PointVault\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\PointVault\\Providers\\PointVaultServiceProvider"
+      ]
+    }
+  }
+}

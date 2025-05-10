@@ -1,0 +1,25 @@
+{
+  "name": "adfox/mollie",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Mollie\\": "src/",
+      "Adfox\\Mollie\\Database\\Factories\\": "database/factories/",
+      "Adfox\\Mollie\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Mollie\\Providers\\MollieServiceProvider"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "adfox/blog",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Blog\\": "src/",
+      "Adfox\\Blog\\Database\\Factories\\": "database/factories/",
+      "Adfox\\Blog\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Blog\\Providers\\BlogServiceProvider"
+      ]
+    }
+  }
+}

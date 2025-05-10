@@ -1,0 +1,25 @@
+{
+  "name": "adfox/iyzico",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Iyzico\\": "src/",
+      "Adfox\\Iyzico\\Database\\Factories\\": "database/factories/",
+      "Adfox\\Iyzico\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Iyzico\\Providers\\IyzicoServiceProvider"
+      ]
+    }
+  }
+}

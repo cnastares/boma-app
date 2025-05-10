@@ -1,0 +1,25 @@
+{
+  "name": "adfox/appearance",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Appearance\\": "src/",
+      "Adfox\\Appearance\\Database\\Factories\\": "database/factories/",
+      "Adfox\\Appearance\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Appearance\\Providers\\AppearanceServiceProvider"
+      ]
+    }
+  }
+}

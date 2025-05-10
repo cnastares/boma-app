@@ -1,0 +1,25 @@
+{
+  "name": "adfox/live-chat",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\LiveChat\\": "src/",
+      "Adfox\\LiveChat\\Database\\Factories\\": "database/factories/",
+      "Adfox\\LiveChat\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\LiveChat\\Providers\\LiveChatServiceProvider"
+      ]
+    }
+  }
+}

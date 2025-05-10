@@ -1,0 +1,25 @@
+{
+  "name": "adfox/phonepe",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Phonepe\\": "src/",
+      "Adfox\\Phonepe\\Database\\Factories\\": "database/factories/",
+      "Adfox\\Phonepe\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Phonepe\\Providers\\PhonepeServiceProvider"
+      ]
+    }
+  }
+}

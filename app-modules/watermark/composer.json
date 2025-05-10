@@ -1,0 +1,25 @@
+{
+  "name": "adfox/watermark",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Watermark\\": "src/",
+      "Adfox\\Watermark\\Database\\Factories\\": "database/factories/",
+      "Adfox\\Watermark\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Watermark\\Providers\\WatermarkServiceProvider"
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "adfox/offline-payment",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\OfflinePayment\\": "src/",
+      "Adfox\\OfflinePayment\\Database\\Factories\\": "database/factories/",
+      "Adfox\\OfflinePayment\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\OfflinePayment\\Providers\\OfflinePaymentServiceProvider"
+      ]
+    }
+  }
+}

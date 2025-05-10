@@ -1,0 +1,72 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+
+@config './tailwind.config.js';
+
+.fi-sidebar-nav > ul  {
+    @apply gap-y-1;
+}
+
+
+.bg-danger {
+    background-color: rgb(185 28 28);
+}
+
+.bg-warning {
+    background-color: rgb(251 191 36);
+}
+
+.bg-info {
+    background-color: rgb(34 211 238);
+}
+
+.no-bottom-radius {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.no-top-radius {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.hide-repeater-item-content .fi-fo-repeater-item-content{
+    @apply !hidden;
+ }
+
+ .price:before,.price:after {
+    content: "";
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    border-style: solid;
+    border-width: calc(.25rem + 1.1375rem/2);
+}
+.price:before {
+    border-color: rgb(0 0 0/1);
+    right: 0;
+    border-left-width: 0.0625rem;
+}
+
+.price:after {
+    border-color:  #feaf4c ;
+    right: 0.0625rem;
+    border-left: none;
+}
+
+.price:before, .price:after {
+    border-right: solid transparent 1em;
+}
+.price{
+    background: linear-gradient(to left, transparent 1em, #feaf4c 1em);
+}
+.dash-logo{
+    @apply dark:filter dark:!invert;
+}
+.fi-main {
+    max-width: 100rem !important;
+}

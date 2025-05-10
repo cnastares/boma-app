@@ -1,0 +1,25 @@
+{
+  "name": "adfox/subscription",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Subscription\\": "src/",
+      "Adfox\\Subscription\\Database\\Factories\\": "database/factories/",
+      "Adfox\\Subscription\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "minimum-stability": "stable",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Subscription\\Providers\\SubscriptionServiceProvider"
+      ]
+    }
+  }
+}

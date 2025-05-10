@@ -1,0 +1,23 @@
+{
+  "name": "adfox/paypal",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\Paypal\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\Paypal\\Providers\\PaypalServiceProvider"
+      ]
+    }
+  }
+}

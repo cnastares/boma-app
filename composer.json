@@ -1,0 +1,169 @@
+{
+    "name": "saasforest/adfox",
+    "type": "project",
+    "description": "Adfox Buy & Sell Marketplace",
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "adfox/appearance": "*",
+        "adfox/blog": "*",
+        "adfox/e-commerce": "*",
+        "adfox/feedback": "*",
+        "adfox/field-template": "*",
+        "adfox/flutterwave": "*",
+        "adfox/google-location-kit": "*",
+        "adfox/live-chat": "*",
+        "adfox/login-otp": "*",
+        "adfox/map-view": "*",
+        "adfox/mollie": "*",
+        "adfox/offline-payment": "*",
+        "adfox/packages": "*",
+        "adfox/paymongo": "*",
+        "adfox/paypal": "*",
+        "adfox/paystack": "*",
+        "adfox/payu": "*",
+        "adfox/phonepe": "*",
+        "adfox/razorpay": "*",
+        "adfox/subscription": "*",
+        "adfox/wallet-system": "*",
+        "adfox/watermark": "*",
+        "akaunting/laravel-money": "^5.1",
+        "artesaos/seotools": "^1.2",
+        "astrotomic/php-twemoji": "^0.2.4",
+        "awcodes/filament-tiptap-editor": "^3.0",
+        "barryvdh/laravel-dompdf": "^3.0",
+        "bezhansalleh/filament-google-analytics": "^2.1",
+        "bezhansalleh/filament-language-switch": "^3.1",
+        "bezhansalleh/filament-shield": "^3.3",
+        "blade-ui-kit/blade-icons": "^1.5",
+        "calebporzio/sushi": "^2.4",
+        "combindma/cmi-payment": "^1.1",
+        "erusev/parsedown": "^1.7",
+        "filament/filament": "^3.0-stable",
+        "filament/notifications": "^3.0-stable",
+        "filament/spatie-laravel-media-library-plugin": "^3.0-stable",
+        "filament/spatie-laravel-settings-plugin": "^3.0-stable",
+        "filament/spatie-laravel-translatable-plugin": "^3.2",
+        "guzzlehttp/guzzle": "^7.2",
+        "imlolman/phonepe-php-sdk": "^0.0.2",
+        "internachi/modular": "^2.0",
+        "ixudra/curl": "^6.22",
+        "iyzico/iyzipay-php": "^2.0",
+        "jenssegers/agent": "^2.6",
+        "laravel/framework": "^10.10",
+        "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.10",
+        "laravel/tinker": "^2.8",
+        "league/flysystem-aws-s3-v3": "^3.16",
+        "livewire/livewire": "^3.2.3",
+        "mokhosh/filament-rating": "^1.4",
+        "mollie/mollie-api-php": "^2.74",
+        "munafio/chatify": "^1.6",
+        "openpayu/openpayu": "2.3.*",
+        "phonepe/phonepe-pg-php-sdk": "^1.0",
+        "razorpay/razorpay": "^2.9",
+        "spatie/laravel-backup": "^8.4",
+        "spatie/laravel-sitemap": "^7.0",
+        "srmklive/paypal": "~3.0",
+        "stephenlake/laravel-approval": "^1.1",
+        "stevebauman/purify": "^6.1",
+        "stripe/stripe-php": "^12.1",
+        "tapp/filament-timezone-field": "^3.0",
+        "timehunter/laravel-google-recaptcha-v3": "^2.5",
+        "twilio/sdk": "^7.13",
+        "tzsk/payu": "^7.0",
+        "ueberdosis/tiptap-php": "^1.4",
+        "whitecube/laravel-cookie-consent": "^1.2",
+        "ysfkaya/filament-phone-input": "^2.2"
+    },
+    "require-dev": {
+        "daftspunk/laravel-config-writer": "^1.2",
+        "fakerphp/faker": "^1.9.1",
+        "laravel/breeze": "^1.23",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.18",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^7.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
+        "spatie/laravel-ignition": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "app/Helper/helper.php",
+            "app/Helper/subscription.php",
+            "app/Helper/PluginHelper.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "app-modules/*",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "dist": {
+                    "type": "zip",
+                    "url": "https://phonepe.mycloudrepo.io/public/repositories/phonepe-pg-php-sdk/phonepe-pg-php-sdk.zip"
+                },
+                "name": "phonepe/phonepe-pg-php-sdk",
+                "version": "1.0.0",
+                "autoload": {
+                    "classmap": [
+                        "/"
+                    ]
+                }
+            }
+        }
+    ]
+}

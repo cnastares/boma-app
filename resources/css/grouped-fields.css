@@ -1,0 +1,39 @@
+@import '../../vendor/filament/filament/resources/css/theme.css';
+
+@layer base {
+    .grouped-fields.vertical > div > .fi-fo-component-ctn > div:not(:last-child) {
+        @apply !border-e-0 !border-b;
+    }
+
+    .grouped-fields.horizontal > div > .fi-fo-component-ctn > div:not(:last-child) {
+        @apply !border-b-0 !border-e;
+    }
+
+    .grouped-fields .fi-fo-component-ctn > div {
+        @apply !border-gray-200 !pe-0 dark:!border-white/10;
+    }
+
+    .grouped-fields:focus-within {
+        @apply !ring-1 !ring-gray-950/10 dark:!ring-white/20;
+    }
+
+    .grouped-fields .fi-input-wrp {
+        @apply !bg-transparent;
+    }
+
+    .grouped-fields .fi-input-wrp:not(.ring-danger-600):not(.dark\:ring-danger-500) {
+        @apply !ring-0;
+    }
+
+    .grouped-fields .fi-fo-component-ctn {
+        @apply !gap-0;
+    }
+
+    .grouped-fields .fi-fo-component-ctn .fi-input-wrp {
+        @apply !shadow-none;
+    }
+
+    .grouped-fields .fi-fo-component-ctn .fi-input-wrp:not(.grouped-fields):focus-within {
+        @apply !ring-2;
+    }
+}

@@ -1,0 +1,333 @@
+/* @import url('grouped-fields.css'); */
+@import '/vendor/awcodes/filament-tiptap-editor/resources/css/plugin.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* add the code bellow */
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+}
+html{
+    padding-right: 0 !important;
+}
+.flow-auto { overflow: auto !important;}
+[x-cloak] { display: none !important; }
+
+.price:before,.price:after {
+    content: "";
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    border-style: solid;
+    border-width: calc(.25rem + 1.1375rem/2);
+}
+
+.price:before {
+    border-color: var(--thum-border-color, #fff);
+    right: 0;
+    border-left-width: 0.0625rem;
+}
+
+.dark {
+    --thum-border-color: #18181B;
+}
+
+.classic {
+    --thum-border-color: #000;
+}
+
+.price:after {
+    border-color:  theme('colors.primary-600');
+    right: 0.0625rem;
+    border-left: none;
+}
+
+.price:before, .price:after {
+    border-right: solid transparent 1em;
+}
+
+@media (min-width: 1024px) {
+    .chat-screen {
+        height: calc(90svh - 3.85rem);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .chat-screen {
+        height: calc(100svh - 3.85rem);
+    }
+  }
+
+.btn-secondary {
+  @apply bg-black !important;
+  @apply dark:bg-white/20 !important;
+}
+.fi-modal-window, .fi-fo-wizard, .fi-btn {
+    @apply classic:ring-black;
+}
+.fi-fo-wizard-header {
+    @apply classic:border-black;
+}
+.fi-fo-wizard-header-step  svg{
+    @apply classic:text-black;
+}
+.fi-ta-table tbody, .fi-ta-ctn, .fi-ta-content{
+    @apply classic:divide-black classic:ring-black;
+}
+.fi-ta-table thead {
+    @apply classic:border-b classic:border-black;
+}
+
+.fi-section, .filepond--root {
+    @apply classic:ring-black;
+}
+.fi-section-content-ctn, .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+    @apply classic:border-black;
+}
+.fi-input-wrapper, .fi-fo-markdown-editor, .fi-input-wrp, .fi-dropdown-panel, .fi-fo-textarea, .fi-fo-tags-input, .fi-fo-radio input, .fi-checkbox-input {
+    @apply classic:ring-black;
+}
+
+.fi-checkbox-input {
+    @apply h-5 w-5;
+}
+.fi-dropdown-list {
+    @apply p-0;
+}
+.fi-dropdown-list-item {
+    @apply px-3 py-3 classic:hover:bg-black classic:hover:text-white rounded-none first:rounded-t-md last:rounded-b-md;
+}
+.fi-dropdown-panel {
+    @apply classic:shadow-custom;
+}
+.fi-dropdown-list-item-icon.text-gray-400 {
+    @apply classic:text-black;
+}
+
+
+.fi-dropdown-list-item:hover .fi-dropdown-list-item-icon, .fi-dropdown-list-item:hover .fi-dropdown-list-item-label  {
+    @apply classic:text-white;
+}
+.home-search .fi-input-wrp {
+   @apply w-full rounded-xl dark:bg-gray-800;
+}
+
+.home-search .fi-input-wrp .fi-input {
+    @apply py-[0.6rem] text-base;
+}
+
+.home-search .fi-input-wrp div:last-child {
+    @apply bg-black ltr:rounded-r-xl rtl:rounded-l-xl px-0;
+}
+.home-search .fi-input-wrp .fi-icon-btn-icon {
+    @apply text-white dark:text-primary-600;
+}
+.home-search .fi-input-wrp  .fi-icon-btn {
+    @apply w-14 h-10;
+}
+.send-message textarea{
+    max-height: 120px;
+}
+.fi-breadcrumbs {
+    @apply  whitespace-nowrap;
+}
+.fi-breadcrumbs ol {
+    @apply flex flex-nowrap items-center gap-2 py-1;
+}
+
+.payment-methods .fi-fo-radio > div {
+    @apply bg-white py-[0.875rem] px-4  rounded-xl mb-4 border border-gray-200 classic:border-black;
+ }
+
+ .payment-methods .break-inside-avoid{
+    @apply dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400
+ }
+ .iti__country-list
+{
+   @apply dark:bg-gray-950 dark:text-white classic:bg-gray-100;
+}
+
+img.twemoji, img.emoji {
+    height: 1.5em;
+    width: 1.5em;
+    margin: 5px;
+    display: inline-block;
+}
+.messenger-infoView, .messenger-sendCard, .shared-photo {
+    @apply classic:border-black dark:border-white/10;
+}
+.emoji-box-trigger-event, .action-svg {
+    @apply classic:text-black !important;
+}
+.m-list-active {
+    @apply classic:bg-gray-100
+}
+.chatify-d-flex.avatar {
+    @apply classic:border classic:border-black;
+}
+.lastMessageIndicator {
+    @apply dark:text-white !important;
+}
+.messenger-listView {
+    @apply border-zinc-200 classic:border-black;
+}
+.m-header .py-4.px-5.border-b, .m-header.m-header-messaging {
+    @apply border-zinc-200 classic:border-black;
+}
+.listOfContacts .messenger-list-item {
+    @apply border-b border-zinc-200 classic:border-black;
+}
+.fi-fo-field-wrp .ring-1 {
+    @apply classic:ring-black;
+}
+
+.messenger-search {
+    @apply classic:border-black;
+}
+.reply-action .text-sm {
+    @apply  text-base !important;
+}
+.mobile-sidebar .fi-modal-content {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    flex: none;
+}
+
+.mega-group-container {
+    max-height: calc(100vh - 10rem);
+}
+.mega-group-container::-webkit-scrollbar {
+    display: none;
+  }
+
+/* WITHOUT PAGINATION NUMBER */
+.without-pagination-count .swiper-pagination-bullet-active {
+    @apply  w-5 rounded transition-all bg-primary-600 !important;
+}
+
+.swiper-pagination-bullet{
+    @apply  !flex !items-center !justify-center !text-center !text-[9px] md:!text-xs !bg-gray-200 dark:!ring-white/10 text-black !opacity-100 dark:!bg-zinc-800 dark:!text-white classic:ring-black !ring-1 dark:!border-white/10 ring-gray-950/5 ;
+}
+.with-pagination-count .swiper-pagination-bullet-active {
+    @apply  transition-all bg-primary-600 dark:bg-primary-600 !important;
+}
+
+.with-pagination-count .swiper-pagination-bullet{
+    @apply !w-7 !h-7;
+}
+.apply-themes{
+   @apply dark:!bg-zinc-800 dark:!text-white classic:ring-black ring-1 dark:!border-white/10 dark:!ring-white/10 ring-gray-950/5
+}
+
+.banner-carousel-side-buttons{
+    @apply bg-opacity-60 focus:bg-opacity-95 p-4 after:!text-[18px] after:font-bold after:absolute  text-center bg-white !text-black !h-6 w-6 rounded-full  apply-themes
+}
+.swiper-button-next{
+    @apply  after:right-[calc(50%-7px)] after:bottom-[7px]
+}
+
+.swiper-button-prev{
+    @apply  after:left-[calc(50%-7px)] after:top-[7px]
+}
+
+.swiper-button-prev-modern{
+    @apply  absolute -left-3 top-1/2  ;
+}
+.swiper-button-next-modern{
+    @apply  absolute -right-3 top-1/2 ;
+}
+.blog-search .fi-input-wrp {
+    @apply w-full rounded-lg dark:bg-gray-800;
+ }
+
+ .blog-search .fi-input-wrp .fi-input {
+     @apply py-[0.6rem] text-base;
+ }
+
+ .blog-search .fi-input-wrp div:last-child {
+     @apply bg-black ltr:rounded-r-lg rtl:rounded-l-lg px-0;
+ }
+ .blog-search .fi-input-wrp .fi-icon-btn-icon {
+     @apply text-white dark:text-primary-600;
+ }
+ .blog-search .fi-input-wrp  .fi-icon-btn {
+     @apply w-14 h-10;
+ }
+
+ .fi-input:disabled{
+    @apply cursor-not-allowed
+}
+
+.disable-ad-upload .filepond--drop-label{
+   display: none !important;
+}
+.disable-ad-upload .filepond--hopper
+{
+   @apply ring-0;
+}
+
+.notification-registration-focus
+{
+    @apply outline-none focus:outline focus:outline-2 focus:outline-[#0066FF] focus:outline-offset-0;
+}
+
+.fi-modal-header{
+    @apply classic:border-black;
+}
+
+.fi-ta-empty-state-icon{
+    @apply w-[10rem] h-[10rem];
+}
+.fi-no-notification-actions > a {
+    @apply border-0 !ring-0 classic:border classic:ring-0 dark:ring-0;
+}
+
+.classic-hover-shadow{
+    @apply transition-all hover:transform hover:-translate-x-1 hover:-translate-y-1 hover:shadow-md classic:hover:shadow-custom ;
+}
+[draggable=true] {
+    cursor: grab;
+}
+[draggable=true]:active {
+    cursor: grabbing;
+    opacity: 0.8;
+}
+
+* {
+    @apply focus:outline-none  focus-visible:outline-primary-600 -outline-offset-1;
+}
+
+.fi-modal-close-btn{
+    @apply focus-within:outline-none ;
+}
+.text-muted {
+    color: #454545 !important;
+}
+.hide-scroll::-webkit-scrollbar {
+    display: none;
+}
+.tiptap-tool{
+    @apply ring-0 -outline-offset-1;
+}
+
+.tiptap-wrapper{
+    @apply focus-within:!ring-2 ;
+}
+.iti {
+    width: 100%;
+}
+.fi-no-notification button{
+    @apply focus-visible:outline-none;
+}
+.fi-breadcrumbs-item-label{
+    @apply text-gray-700
+}

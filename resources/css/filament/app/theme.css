@@ -1,0 +1,300 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config './tailwind.config.js';
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.fi-sidebar-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.price:before,.price:after {
+    content: "";
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    border-style: solid;
+    border-width: calc(.25rem + 1.1375rem/2);
+}
+
+.price:before {
+    border-color: var(--thumb-border-color, #fff);
+    right: 0;
+    border-left-width: 0.0625rem;
+}
+
+.dark {
+    --thumb-border-color: #18181B;
+}
+
+.classic {
+    --thumb-border-color: #000;
+}
+
+.price:after {
+    border-color:  theme('colors.price-600');
+    right: 0.0625rem;
+    border-left: none;
+}
+
+.price:before, .price:after {
+    border-right: solid transparent 1em;
+}
+
+.fi-sidebar-nav>ul {
+    @apply gap-y-1;
+}
+
+.fi-modal-window,
+.fi-fo-wizard,
+.fi-btn {
+    @apply classic:ring-black;
+}
+
+.fi-fo-wizard-header {
+    @apply classic:border-black;
+}
+
+.fi-fo-wizard-header-step svg {
+    @apply classic:text-black;
+}
+
+.fi-topbar>nav {
+    @apply classic:ring-black;
+}
+
+.fi-sidebar-nav {
+    @apply classic:border-r border-t classic:border-black dark:border-r dark:border-[#18181B] bg-[#FAFAFA] dark:bg-[#09090B] classic:bg-[#F4F4F0];
+}
+
+.fi-main-ctn{
+    @apply bg-[#FAFAFA] dark:bg-[#09090B] classic:bg-[#F4F4F0];
+}
+
+.fi-section,
+.filepond--root {
+    @apply classic:ring-black;
+}
+
+/* .fi-ta-header {
+    @apply classic:border-b classic:border-black dark:border-b dark:border-white/10;
+} */
+
+.fi-sidebar-header {
+    @apply classic:ring-black classic:border-r-0 classic:border-black;
+}
+
+.fi-ta-table tbody,
+.fi-ta-ctn,
+.fi-ta-content {
+    @apply classic:divide-black classic:ring-black;
+}
+
+.fi-ta-table thead {
+    @apply classic:border-b classic:border-black;
+}
+
+.fi-wi-stats-overview-stat {
+    @apply classic:ring-black;
+}
+
+.fi-input-wrapper,
+.fi-fo-markdown-editor,
+.fi-input-wrp,
+.fi-dropdown-panel,
+.fi-fo-textarea,
+.fi-fo-tags-input,
+.fi-fo-radio input,
+.fi-checkbox-input {
+    @apply classic:ring-black;
+}
+
+.fi-pagination-items,
+.fi-pagination-item {
+    @apply classic:ring-black;
+}
+
+.fi-sidebar-item-active>.fi-sidebar-item-button {
+    @apply classic:bg-black;
+}
+
+.fi-sidebar-item-active>.fi-sidebar-item-button>.fi-sidebar-item-label {
+    @apply classic:text-white;
+}
+
+.fi-sidebar-item-active>.fi-sidebar-item-button>.fi-sidebar-item-icon {
+    @apply classic:text-white;
+}
+
+.fi-dropdown-header {
+    @apply classic:border-b classic:border-black;
+}
+
+.fi-active>.fi-sidebar-item-button>.fi-sidebar-item-grouped-border>.absolute {
+    @apply dark:bg-white;
+}
+
+.fi-active>.fi-sidebar-item-button>.fi-sidebar-item-grouped-border>.relative {
+    @apply classic:bg-white;
+}
+
+.fi-sidebar-nav {
+    @apply border-r border-[#ECECED] shadow-sm;
+}
+
+.fi-theme-switcher {
+    @apply !hidden;
+}
+
+.fi-dropdown-list {
+    @apply border-hidden;
+}
+
+.fi-dropdown-list {
+    @apply classic:border-hidden p-0;
+}
+
+.fi-sidebar-item-active>.fi-sidebar-item-button {
+    @apply bg-black;
+}
+
+.fi-sidebar-item-active>.fi-sidebar-item-button {
+    @apply dark:bg-primary-600;
+}
+
+
+.fi-sidebar-item-active>.fi-sidebar-item-button>.fi-sidebar-item-label {
+    @apply text-white;
+}
+
+.fi-sidebar-item-active>.fi-sidebar-item-button>.fi-sidebar-item-icon {
+    @apply text-white;
+}
+
+.fi-active>.fi-sidebar-item-button>.fi-sidebar-item-grouped-border>.relative {
+    @apply classic:bg-white;
+}
+
+.fi-active>.fi-sidebar-item-button>.fi-sidebar-item-grouped-border>.relative {
+    @apply dark:bg-white;
+}
+
+.fi-active>.fi-sidebar-item-button>.fi-sidebar-item-grouped-border>.relative {
+    @apply bg-white;
+}
+
+.fi-topbar-open-sidebar-btn {
+    @apply text-black;
+}
+
+.fi-sidebar-item-button>.fi-sidebar-item-icon {
+    @apply text-black;
+}
+
+.fi-sidebar-group-icon {
+    @apply text-black;
+}
+
+.fi-sidebar-group-icon {
+    @apply dark:text-white;
+}
+
+.fi-sidebar-item-button>.fi-sidebar-item-icon {
+    @apply dark:text-white;
+}
+
+.fi-sidebar-group-label {
+    @apply text-gray-700 dark:text-white;
+}
+
+.fi-tabs {
+    @apply p-0 w-fit classic:border border-black;
+}
+
+.fi-tabs-item-active>.fi-tabs-item-label {
+    @apply text-white;
+}
+
+.fi-tabs>.fi-tabs-item-active {
+    @apply !bg-black;
+}
+
+.fi-inline>div {
+    @apply border-t border-gray-200 classic:border-t classic:border-black dark:border-t dark:border-white/10;
+}
+
+/* .fi-modal-header{
+    @apply !border-black border;
+} */
+
+.fi-tabs>.fi-tabs-item-active {
+    @apply dark:!bg-primary-600;
+}
+
+.fi-ta-empty-state-icon-ctn {
+    @apply dark:bg-gray-900 bg-primary-900;
+}
+
+/* .fi-ta-empty-state-icon-ctn {
+    @apply bg-white-900;
+} */
+
+.fi-avatar {
+    border: 1px solid black;
+}
+
+.fi-ta-content {
+    @apply classic:border border-none;
+}
+
+.fi-dropdown-list-item {
+    @apply px-3 py-3 classic:hover:bg-black classic:hover:text-white rounded-none first:rounded-t-md last:rounded-b-md;
+}
+
+.fi-dropdown-list-item-icon.text-gray-400 {
+    @apply classic:text-black;
+}
+.dash-logo{
+    @apply dark:filter dark:!invert;
+}
+.fi-ta-content thead {
+    @apply border-t border-gray-200 classic:border-t classic:border-black dark:border-t dark:border-white/10;
+}
+.fi-topbar-database-notifications-btn{
+    @apply text-[#333333] dark:text-gray-400 classic:text-[#000000];
+}
+.fi-topbar-database-notifications-btn > svg {
+    @apply w-[1.9rem] h-[1.9rem];
+}
+.fi-dropdown-list-item:hover .fi-dropdown-list-item-icon,
+.fi-dropdown-list-item:hover .fi-dropdown-list-item-label,.fi-dropdown-header:hover .fi-dropdown-header-label  {
+    @apply classic:text-white ;
+}
+.fi-dropdown-header,.fi-dropdown-list-item-icon{
+    @apply  classic:hover:!text-white rounded-none ;
+}
+.fi-dropdown-header
+{
+    @apply  hover:bg-gray-50 focus-visible:bg-gray-50 dark:hover:bg-white/5 dark:focus-visible:bg-white/5 text-gray-400 classic:text-black dark:text-gray-500;
+}
+.fi-ta-empty-state-icon{
+    @apply w-[10rem] h-[10rem];
+}
+.fi-dropdown-panel {
+    @apply classic:shadow-custom;
+}
+.fi-no-notification-actions > a {
+    @apply border-0 !ring-0 classic:border classic:ring-0 dark:ring-0;
+}
+
+.fi-dropdown-list-item:hover img {
+    @apply classic:filter classic:invert !important;
+}
+/* .fi-dropdown-list-item:hover .fi-dropdown-list-item-icon {
+    @apply classic:text-white classic:filter classic:!invert classic:hover:bg-black;
+} */
+.fi-main {
+    max-width: 100rem !important;
+}

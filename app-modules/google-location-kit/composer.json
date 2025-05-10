@@ -1,0 +1,23 @@
+{
+  "name": "adfox/google-location-kit",
+  "description": "",
+  "type": "library",
+  "version": "1.0",
+  "license": "proprietary",
+  "require": {
+    "filament/filament": "^3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adfox\\GoogleLocationKit\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adfox\\GoogleLocationKit\\Providers\\GoogleLocationKitServiceProvider"
+      ]
+    }
+  }
+}
