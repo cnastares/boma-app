@@ -516,7 +516,9 @@ class VersionUpdate extends Page
 
                 // Define storage parameters
                 $disk = 'local';
-                $destinationPath = ''; // Store directly in 'storage/app'
+                // Store the uploaded update file at the root of storage/app.
+                // An empty string here causes a ValueError on some systems.
+                $destinationPath = '/';
                 $newFileName = 'source-code.zip';
 
                 // Store the uploaded file
