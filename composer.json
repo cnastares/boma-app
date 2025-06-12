@@ -59,7 +59,7 @@
         "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.16",
-        "livewire/livewire": "^3.2.3",
+        "livewire/livewire": "^3.6.2",
         "mokhosh/filament-rating": "^1.4",
         "mollie/mollie-api-php": "^2.74",
         "munafio/chatify": "^1.6",
