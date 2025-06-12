@@ -23,6 +23,7 @@ use App\Livewire\Reservation\CartSummary;
 use App\Livewire\Reservation\CheckoutSummary;
 use App\Livewire\Reservation\Purchases\MyPurchases;
 use App\Livewire\Reservation\Purchases\ViewPurchase;
+use App\Http\Controllers\Livewire\CustomFileUploadController;
 use App\Livewire\User\MyAccount;
 use App\Livewire\User\PageDetail;
 use App\Livewire\User\Contact;
@@ -40,6 +41,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/manifest.json', '\App\Http\Controllers\PwaController@manifest');
+
+// Override Livewire's default upload endpoint
+Route::post('/livewire/upload-file', [CustomFileUploadController::class, 'handle']);
 
 Route::get('/', function () {
     return view('welcome');
