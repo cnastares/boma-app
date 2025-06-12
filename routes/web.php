@@ -12,6 +12,7 @@ use App\Livewire\User\MyFavorites;
 use App\Livewire\User\MyMessages;
 use App\Livewire\User\MyProfile;
 use App\Livewire\User\ViewProfile;
+use Livewire\Livewire;
 
 use App\Livewire\Ad\SuccessAd;
 use App\Livewire\Ad\SuccessUpgrade;
@@ -38,6 +39,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Register internal Livewire endpoints
+Livewire::routes();
 
 Route::get('/manifest.json', '\App\Http\Controllers\PwaController@manifest');
 
