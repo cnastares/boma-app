@@ -760,10 +760,15 @@ if (!function_exists('getVerificationFields')) {
 if (!function_exists('formatPriceWithCurrency')) {
     function formatPriceWithCurrency($price)
     {
+        // Gracefully handle null values to avoid a TypeError when formatting
+        if ($price === null) {
+            return '';
+        }
+
         $currencySymbol = config('app.currency_symbol'); // Fetch currency symbol from config
         $locale = getPaymentSystemSetting('currency_locale') ?? 'en_US'; // Default to 'en_US' if not set
 
-        $formattedPrice = Number::format($price, locale: $locale);
+        $formattedPrice = Number::format((float) $price, locale: $locale);
 
         return isDisplayCurrencyAfterPrice()
             ? "{$formattedPrice} {$currencySymbol}"
