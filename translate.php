@@ -44,20 +44,37 @@ function translate(string $text): string
 {
     if (preg_match('/[áéíóúñäëïöü]/iu', $text)) return $text;
 
+    $payload = json_encode([
+        'q'      => $text,
+        'source' => 'en',
+        'target' => 'es',
+        'format' => 'text',
+    ]);
+
+    $headers = ['Content-Type: application/json'];
+    if ($apiKey = getenv('LIBRETRANSLATE_API_KEY')) {
+        $headers[] = 'X-Api-Key: ' . $apiKey;
+    }
+
     $ch = curl_init('https://translate.argosopentech.com/translate'); // <-- endpoint alternativo
     curl_setopt_array($ch, [
         CURLOPT_POST           => true,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT        => 15,
-        CURLOPT_POSTFIELDS     => http_build_query([
-            'q'      => $text,
-            'source' => 'en',
-            'target' => 'es',
-            'format' => 'text'
-        ]),
+        CURLOPT_HTTPHEADER     => $headers,
+        CURLOPT_POSTFIELDS     => $payload,
     ]);
-    $json = curl_exec($ch);
+
+    $json  = curl_exec($ch);
+    $errno = curl_errno($ch);
+    $http  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
     curl_close($ch);
+
+    if ($errno || $http !== 200) {
+        fwrite(STDERR, "Error al traducir: " . ($error ?: "HTTP $http") . "\n");
+        return $text;
+    }
 
     $data = json_decode($json ?? '', true);
     return $data['translatedText'] ?? $text;
