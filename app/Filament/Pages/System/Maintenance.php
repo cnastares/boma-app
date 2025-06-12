@@ -78,7 +78,7 @@ class Maintenance extends SettingsPage
                 Config::write('maintenance.message', str_replace(["'", '"'], '', $data['message']));
                 Config::write('maintenance.secret', $data['secret']);
             } catch (Exception $ex) {
-                dd($ex->getMessage());
+                logger()->error($ex->getMessage());
             }
 
             // Notify the logged-in user
