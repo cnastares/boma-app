@@ -41,8 +41,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Register internal Livewire endpoints
-Livewire::routes();
+// In Livewire v3 internal routes are registered automatically
+// so explicit registration is unnecessary
 
 Route::get('/manifest.json', '\App\Http\Controllers\PwaController@manifest');
 
