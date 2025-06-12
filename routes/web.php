@@ -47,7 +47,8 @@ Livewire::routes();
 Route::get('/manifest.json', '\App\Http\Controllers\PwaController@manifest');
 
 // Override Livewire's default upload endpoint
-Route::post('/livewire/upload-file', [CustomFileUploadController::class, 'handle']);
+Route::post('/livewire/upload-file', [CustomFileUploadController::class, 'handle'])
+    ->name('livewire.upload-file');
 
 Route::get('/', function () {
     return view('welcome');
