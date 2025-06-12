@@ -35,6 +35,16 @@ If migrations have already been executed, you can simply run the seeder directly
 php artisan db:seed
 ```
 
+### Settings Migration
+
+Settings are stored separately from the main database tables and must be migrated as well:
+
+```bash
+php artisan settings:migrate
+```
+
+Run this command again whenever you pull updates that include new settings migrations.
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
