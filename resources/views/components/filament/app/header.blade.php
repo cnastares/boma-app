@@ -7,23 +7,23 @@
             });
         },
         updateTheme() {
-            const drakcontainer = document.querySelector('.fi-dropdown-trigger');
+            const dropdownTrigger = document.querySelector('.fi-dropdown-trigger');
             if (this.theme === 'classic') {
                 document.documentElement.classList.add('classic');
                 document.documentElement.classList.remove('dark');
-                drakcontainer.classList.remove('text-primary-600');
+                dropdownTrigger.classList.remove('text-primary-600');
 
 
             } else if (this.theme === 'dark') {
                 document.documentElement.classList.add('dark');
                 document.documentElement.classList.remove('classic');
-                drakcontainer.classList.add('text-primary-600');
+                dropdownTrigger.classList.add('text-primary-600');
 
 
             } else {
                 document.documentElement.classList.remove('classic');
                 document.documentElement.classList.remove('dark');
-                drakcontainer.classList.remove('text-primary-600');
+                dropdownTrigger.classList.remove('text-primary-600');
             }
         }
 
