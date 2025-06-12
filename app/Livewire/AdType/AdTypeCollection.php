@@ -207,7 +207,7 @@ class AdTypeCollection extends Component
 
         $latitude = session('latitude', null);
         $longitude = session('longitude', null);
-        $search_radius = app(LocationSettings::class)->search_radius;
+        $search_radius = app(LocationSettings::class)->search_radius ?? 100;
         $radius = $search_radius;
         $selectedCountry = session('country', null);
         $selectedState = session('state', null);
