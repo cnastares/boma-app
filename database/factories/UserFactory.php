@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -21,8 +22,8 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            // bcrypt hash for the string "password" using cost 4
-            'password' => '$2b$04$yqYZBmNcgb1AYN4LV4hEBeCGs2hU8GRG8QyovqT7hvn3NlZDkKrZa',
+            // bcrypt hash for the string "password"
+            'password' => Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }
