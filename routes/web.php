@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/manifest.json', '\App\Http\Controllers\PwaController@manifest');
 
 Route::get('/', function () {
