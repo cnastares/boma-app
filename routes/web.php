@@ -9,6 +9,7 @@ use App\Http\Controllers\ChatifyController;
 use App\Http\Controllers\Export\DownloadExport;
 use App\Http\Controllers\Reservation\PaymentCallbackController;
 use App\Http\Controllers\Livewire\CustomFileUploadController;
+use App\Http\Controllers\ProfileController;
 
 /* Livewire Components */
 use App\Livewire\Home\Home;
@@ -109,6 +110,12 @@ Route::get('/view-purchase/{id}',      ViewPurchase::class)->name('reservation.v
 Route::get('/admin/exports/{export}/download', DownloadExport::class)
       ->middleware(['auth', 'verified', 'can:download-exports'])
       ->name('filament.exports.download');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 /* Auth scaffolding */
 require __DIR__.'/auth.php';
