@@ -65,6 +65,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/my-account', MyAccount::class)->name('my-account');
     Route::get('/my-messages', MyMessages::class)->name('my-messages');
     Route::get('/my-profile', MyProfile::class)->name('my-profile');
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/my-favorites', MyFavorites::class)->name('my-favorites');
     Route::get('/verification-required', VerificationRequired::class)->name('verification-required');
     Route::get('/ad-modifications/{id}', AdModifications::class)->name('ad-modifications');
