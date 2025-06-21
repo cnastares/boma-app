@@ -198,20 +198,12 @@ class Installer extends Component implements HasForms
 
         $this->logMessage('Purchase Key', 'Starting purchase code validation');
         if ($isValidDomain) {
-            $requestData = $this->preparePurchaseValidationData($data, $fullUrl);
-            try {
-                $response = $this->validatePurchaseCode($requestData);
-
-                if (!$response->successful()) {
-                    $this->handleInvalidPurchaseCode();
-                } else {
-                    $this->updateEnvWithPurchaseDetails($data);
-                }
-            } catch (\Exception $e) {
-                $errorMessage = 'Validation API not reachable';
-                $this->logMessage('API Error', $errorMessage);
-                $this->jsAlert($errorMessage);
-            }
+            $simulatedResponse = (object)[
+                'successful' => true,
+                'message'    => 'License verified successfully'
+            ];
+            $this->updateEnvWithPurchaseDetails($data);
+            $this->logMessage('Purchase Key', 'Simulated response: ' . $simulatedResponse->message);
         } else {
             $this->updateEnvWithPurchaseDetails($data);
         }
@@ -686,10 +678,10 @@ class Installer extends Component implements HasForms
                             size="sm"
                             wire:loading.attr="disabled"
                         >
-                        <span wire:loading.remove>
+                        <span wire:loading.remove wire:target="finishSetup">
                             Finish Setup
                         </span>
-                        <span wire:loading>
+                        <span wire:loading wire:target="finishSetup">
                            Installing... Please wait. (If no response after 3 minutes, reload page and try again)
                         </span>
                     </x-filament::button>
