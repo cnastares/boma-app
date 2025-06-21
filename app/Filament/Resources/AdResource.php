@@ -175,7 +175,7 @@ class AdResource extends Resource implements HasShieldPermissions
                 $fieldType = $field->type->value;
                 switch ($fieldType) {
                     case 'text':
-                        ${strlen($groupName) ? 'sectionComponents' : 'components'}[] = TextInput::make($dynamicFieldId)->label($field->name)->label($field->name)->required($field->required)->live(onBlur: true)->helperText($field->helpertext);
+                        ${strlen($groupName) ? 'sectionComponents' : 'components'}[] = TextInput::make($dynamicFieldId)->label($field->name)->required($field->required)->live(onBlur: true)->helperText($field->helpertext);
                         break;
                     case 'select':
                         ${strlen($groupName) ? 'sectionComponents' : 'components'}[] = Select::make($dynamicFieldId)->label($field->name)->options($field->options)->required($field->required)->live(onBlur: true)->helperText($field->helpertext);
@@ -207,8 +207,11 @@ class AdResource extends Resource implements HasShieldPermissions
                         break;
                 }
             }
-            if (count($sectionComponents))
-                $components[] = Section::make($groupName)->schema($sectionComponents)->collapsible()->collapsible();
+            if (count($sectionComponents)) {
+                $components[] = Section::make($groupName)
+                    ->schema($sectionComponents)
+                    ->collapsible();
+            }
         }
         return $components;
     }

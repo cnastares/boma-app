@@ -146,7 +146,7 @@ class DynamicField extends Component implements HasForms
                 $fieldType = $field->type->value;
                 switch ($fieldType) {
                     case 'text':
-                        ${strlen($groupName) ? 'sectionComponents' : 'components'}[] = TextInput::make($field->id)->label($field->name)->label($field->name)->required($field->required)->live(debounce: 500)->helperText($field->helpertext)->maxLength($field->max_length)->minLength($field->min_length)->alpha($field->validation_type?->value == 'alpha')->alphaNum($field->validation_type?->value == 'alpha_numeric')->alphaDash($field->validation_type?->value == 'alpha_dash')
+                    ${strlen($groupName) ? 'sectionComponents' : 'components'}[] = TextInput::make($field->id)->label($field->name)->required($field->required)->live(debounce: 500)->helperText($field->helpertext)->maxLength($field->max_length)->minLength($field->min_length)->alpha($field->validation_type?->value == 'alpha')->alphaNum($field->validation_type?->value == 'alpha_numeric')->alphaDash($field->validation_type?->value == 'alpha_dash')
                         //TODO: add validation with spaces
                         // ->rules([
                         //     fn (): Closure => function (string $attribute, $value, Closure $fail) use($field) {
@@ -186,8 +186,11 @@ class DynamicField extends Component implements HasForms
                         break;
                 }
             }
-            if (count($sectionComponents))
-                $components[] = Section::make($groupName)->schema($sectionComponents)->collapsible()->collapsible();
+            if (count($sectionComponents)) {
+                $components[] = Section::make($groupName)
+                    ->schema($sectionComponents)
+                    ->collapsible();
+            }
         }
         return $components;
     }
