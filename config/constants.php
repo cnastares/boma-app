@@ -1,5 +1,5 @@
 <?php
-const CURRENCY_LOCALE = [
+defined('CURRENCY_LOCALE') || define('CURRENCY_LOCALE', [
     'af_NA' => "Afrikaans (Namibia)",
     'af_ZA' => "Afrikaans (South Africa)",
     'af' => "Afrikaans",
@@ -436,13 +436,13 @@ const CURRENCY_LOCALE = [
     'yo' => "Yoruba",
     'zu_ZA' => "Zulu (South Africa)",
     'zu' => "Zulu"
-];
+]);
 
 
-const CLASSIFIED_MARKETPLACE = 'classified';
-const ONLINE_SHOP_MARKETPLACE = 'online_shop';
-const VEHICLE_RENTAL_MARKETPLACE = 'vehicle_rental';
-const POINT_SYSTEM_MARKETPLACE = 'point_system';
+defined('CLASSIFIED_MARKETPLACE') || define('CLASSIFIED_MARKETPLACE', 'classified');
+defined('ONLINE_SHOP_MARKETPLACE') || define('ONLINE_SHOP_MARKETPLACE', 'online_shop');
+defined('VEHICLE_RENTAL_MARKETPLACE') || define('VEHICLE_RENTAL_MARKETPLACE', 'vehicle_rental');
+defined('POINT_SYSTEM_MARKETPLACE') || define('POINT_SYSTEM_MARKETPLACE', 'point_system');
 
-const RESERVATION_TYPE_RETAIL =  'retail';
-const RESERVATION_TYPE_POINT_VAULT =  'point_vault';
+defined('RESERVATION_TYPE_RETAIL') || define('RESERVATION_TYPE_RETAIL', 'retail');
+defined('RESERVATION_TYPE_POINT_VAULT') || define('RESERVATION_TYPE_POINT_VAULT', 'point_vault');
