@@ -50,7 +50,9 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->delete();
+        // Permanently delete the user to ensure tests expecting a fully
+        // removed record pass even though the model uses SoftDeletes.
+        $user->forceDelete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
