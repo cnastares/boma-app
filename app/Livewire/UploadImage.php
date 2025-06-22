@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use App\Exceptions\InvalidUploadException;
 
 class UploadImage extends Component
 {
@@ -31,7 +32,9 @@ class UploadImage extends Component
 
     public function upload()
     {
-        Log::info('UploadImage: upload initiated');
+        Log::info('UploadImage: upload initiated', [
+            'hasPhoto' => $this->photo !== null,
+        ]);
 
         $validated = $this->validate([
             'photo' => 'required|image|mimes:jpg,jpeg,png,gif,webp,avif,bmp|max:10240',
@@ -50,21 +53,22 @@ class UploadImage extends Component
         $path = 'uploads';
         if (empty($path)) {
             Log::error('UploadImage: storage path is empty');
-            return;
+            throw new InvalidUploadException('Invalid storage path');
         }
 
         $tmpPath = $this->photo->getRealPath();
-        if (empty($tmpPath)) {
-            Log::error('UploadImage: uploaded file path is empty');
-            return;
+        if (empty($tmpPath) || !file_exists($tmpPath)) {
+            Log::error('UploadImage: uploaded file path is invalid', ['path' => $tmpPath]);
+            throw new InvalidUploadException('Uploaded file path is invalid');
         }
 
         try {
-            $storedPath = $this->photo->store($path, 'media');
+            $storedPath = $this->photo->storePublicly($path, ['disk' => 'media']);
             Log::info('UploadImage: file stored', ['path' => $storedPath]);
             $this->savedImage = Storage::disk('media')->url($storedPath);
         } catch (\Exception $e) {
             Log::error('UploadImage: store failed', ['error' => $e->getMessage()]);
+            $this->addError('photo', 'No se pudo guardar la imagen. Inténtalo de nuevo.');
         }
     }
 
