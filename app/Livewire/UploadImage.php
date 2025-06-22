@@ -41,6 +41,12 @@ class UploadImage extends Component
             return;
         }
 
+        $tmpPath = $this->photo->getRealPath();
+        if (empty($tmpPath)) {
+            Log::error('UploadImage: uploaded file path is empty');
+            return;
+        }
+
         try {
             $storedPath = $this->photo->store($path, 'media');
             Log::info('UploadImage: file stored', ['path' => $storedPath]);
