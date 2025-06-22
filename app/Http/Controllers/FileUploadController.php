@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class FileUploadController extends Controller
 {
@@ -23,18 +22,16 @@ class FileUploadController extends Controller
             'valid' => $file->isValid(),
         ]);
 
-        if (! $file->isValid()) {
-            throw new \RuntimeException('Uploaded file is not valid');
+        if (! $file->isValid() || ! $file->getClientOriginalName()) {
+            Log::error('Upload fallido: archivo inválido o vacío');
+            abort(422, 'Archivo inválido o vacío');
         }
 
-        $filename = $file->getClientOriginalName() ?: Str::random(10) . '.jpg';
-
-        if ($filename === '') {
-            throw new \RuntimeException('Filename for upload is empty');
-        }
+        $path = $file->storePublicly('livewire-tmp', 'media');
+        Log::info('Upload exitoso', ['path' => $path]);
 
         return [
-            'path' => $file->storeAs('uploads', $filename, 'media'),
+            'path' => $path,
         ];
     }
 }

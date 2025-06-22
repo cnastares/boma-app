@@ -19,6 +19,7 @@ use App\Livewire\Ad\VerificationRequired;
 use App\Livewire\AdType\AdOverview;
 use App\Livewire\AdType\AdTypeCollection;
 use App\Livewire\Notification\Registration;
+use App\Http\Controllers\FileUploadController;
 use App\Livewire\Reservation\CartSummary;
 use App\Livewire\Reservation\CheckoutSummary;
 use App\Livewire\Reservation\Purchases\MyPurchases;
@@ -57,6 +58,9 @@ Route::group([], function () {
     // Route::get('/location/{location}/{category}/{subcategory?}', AdList::class)->name('location-category');
     Route::get('/notification/register', Registration::class);
     Route::get('/upload-image', \App\Livewire\UploadImage::class)->name('upload-image');
+    Route::post('/livewire/upload-file', [FileUploadController::class, 'store'])
+        ->middleware(config('livewire.temporary_file_upload.middleware'))
+        ->name('livewire.upload-file');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
