@@ -35,6 +35,14 @@ class UploadImage extends Component
 
         Log::info('UploadImage: validation passed');
 
+        // Check for upload errors before proceeding
+        if (!isset($_FILES['photo']) || ($_FILES['photo']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+            $errorCode = $_FILES['photo']['error'] ?? 'unknown';
+            Log::error('UploadImage: upload error', ['error' => $errorCode]);
+            $this->addError('photo', 'File upload failed. Please try again.');
+            return;
+        }
+
         $path = 'uploads';
         if (empty($path)) {
             Log::error('UploadImage: storage path is empty');
