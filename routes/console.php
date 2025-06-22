@@ -17,3 +17,14 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('debug:filesystem', function () {
+    $disk = \Illuminate\Support\Facades\Storage::disk('media');
+    logger()->info('[Debug FS]', [
+        'root' => $disk->path('/'),
+        'existe' => file_exists($disk->path('/')),
+        'escribible' => is_writable($disk->path('/')),
+        'archivos' => scandir($disk->path('/')),
+    ]);
+    $this->info('Revisar logs: storage/logs/laravel.log');
+});

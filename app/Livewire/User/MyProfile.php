@@ -121,7 +121,16 @@ class MyProfile extends Component implements HasForms
             ->image()
             ->required()
             ->live(debounce: 500)
-            ->imageEditor();
+            ->imageEditor()
+            ->afterStateUpdated(function ($state) {
+                if ($state instanceof \Livewire\TemporaryUploadedFile) {
+                    \Illuminate\Support\Facades\Log::info('[Profile Upload]', [
+                        'name' => $state->getClientOriginalName(),
+                        'size' => $state->getSize(),
+                        'valid' => $state->isValid(),
+                    ]);
+                }
+            });
 
         $storageType = config('filesystems.default');
         if ($storageType == 's3') {
@@ -321,6 +330,15 @@ class MyProfile extends Component implements HasForms
                     ];
                 })
                 ->imageEditor()
+                ->afterStateUpdated(function ($state) {
+                    if ($state instanceof \Livewire\TemporaryUploadedFile) {
+                        \Illuminate\Support\Facades\Log::info('[Banner Upload]', [
+                            'name' => $state->getClientOriginalName(),
+                            'size' => $state->getSize(),
+                            'valid' => $state->isValid(),
+                        ]);
+                    }
+                })
                 ->imageResizeMode('cover')
                 ->imageResizeTargetWidth('1480')
                 ->imageResizeTargetHeight('350')
