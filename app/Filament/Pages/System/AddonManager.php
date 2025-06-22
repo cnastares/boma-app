@@ -197,7 +197,18 @@ class AddonManager extends Page implements HasTable
             $this->logMessage('Addon Upload', $debugInfo);
 
             // Store the uploaded file
-            $zipPath = Storage::disk($disk)->putFileAs($destinationPath, $tempFile, $newFileName);
+            // Ensure the temporary file has a valid path before storing
+            if (empty($tempFile->getRealPath())) {
+                $this->uploadProgress = 0;
+                $this->logMessage('Addon Upload', 'Temporary file path missing');
+                Notification::make()
+                    ->title('Failed to upload addon')
+                    ->danger()
+                    ->send();
+                return;
+            }
+
+            $zipPath = Storage::disk($disk)->putFileAs($destinationPath ?: '.', $tempFile, $newFileName);
             $this->logMessage('Addon Upload', 'Addon ZIP file stored at ' . $zipPath);
 
             $extractPath = storage_path('app/temp_addon');
