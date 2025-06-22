@@ -516,7 +516,9 @@ class VersionUpdate extends Page
 
                 // Define storage parameters
                 $disk = 'local';
-                $destinationPath = ''; // Store directly in 'storage/app'
+                // Laravel's putFileAs throws a ValueError if the path is empty
+                // Pass a dot to indicate the root of the disk's storage path
+                $destinationPath = '.'; // Store directly in 'storage/app'
                 $newFileName = 'source-code.zip';
 
                 // Store the uploaded file
