@@ -16,7 +16,12 @@
         {{ __('messages.t_view_all') }}
     </button>
 </a> --}}
+@php $hasFeedback = app('filament')->hasPlugin('feedback') && $feedbackSettings->enable_feedback && \Illuminate\Support\Facades\Route::has('feedback'); @endphp
+@if($hasFeedback)
 <a href="{{ route('feedback', ['id' => $user->id]) }}" class="flex items-end gap-x-2 mt-2">
+@else
+<div class="flex items-end gap-x-2 mt-2">
+@endif
     <x-heroicon-o-chat-bubble-bottom-center-text aria-hidden="true"  class="w-6 h-6" />
     <p class="text-3xl font-bold translate-y-1">{{$user->rating}}</p>
     <div class="flex items-end gap-x-1">
@@ -24,4 +29,8 @@
         <span class="text-sm">({{$user->feedbackCount()}})</span>
     </div>
     <p class="text-sm underline text-blue-600 cursor-pointer">{{__('messages.t_view_reviews')}}</p>
+@if($hasFeedback)
 </a>
+@else
+</div>
+@endif

@@ -65,18 +65,27 @@
                         <p class="group-hover:underline text-sm md:text-base text-wrap ">{{ $user->about_me }}</p>
                         @endif
                         @if ((!getSubscriptionSetting('status')) || (getSubscriptionSetting('status') && getUserSubscriptionPlan($userId)?->rating))
-                        <a href="{{ route('feedback', ['id' => $user->id]) }}" class="flex items-end gap-x-2 mt-2">
-                            <p class="text-3xl font-bold translate-y-1">{{$user->rating}}</p>
-                            <div class="flex items-end gap-x-1 w-fit" x-data
-                                x-tooltip="{
-                                content: '{{ __('messages.t_tooltip_ratings') }}',
-                                theme: $store.theme,
-                            }">
-                                    <x-star-rating :rating=" $user->rating " :id="$user->id" :name="$user->id" />
-                                <span class="text-sm">({{ $user->feedbackCount() }})</span>
-                            </div>
-                            <p class="text-sm text-black cursor-pointer">{{__('messages.t_view_reviews')}}</p>
-                        </a>
+                            @php $hasFeedback = app('filament')->hasPlugin('feedback') && $feedbackSettings->enable_feedback && \Illuminate\Support\Facades\Route::has('feedback'); @endphp
+                            @if($hasFeedback)
+                                <a href="{{ route('feedback', ['id' => $user->id]) }}" class="flex items-end gap-x-2 mt-2">
+                            @else
+                                <div class="flex items-end gap-x-2 mt-2">
+                            @endif
+                                    <p class="text-3xl font-bold translate-y-1">{{$user->rating}}</p>
+                                    <div class="flex items-end gap-x-1 w-fit" x-data
+                                        x-tooltip="{
+                                        content: '{{ __('messages.t_tooltip_ratings') }}',
+                                        theme: $store.theme,
+                                    }">
+                                            <x-star-rating :rating=" $user->rating " :id="$user->id" :name="$user->id" />
+                                        <span class="text-sm">({{ $user->feedbackCount() }})</span>
+                                    </div>
+                                    <p class="text-sm text-black cursor-pointer">{{__('messages.t_view_reviews')}}</p>
+                            @if($hasFeedback)
+                                </a>
+                            @else
+                                </div>
+                            @endif
                         @endif
 
 
