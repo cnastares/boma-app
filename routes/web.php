@@ -59,7 +59,7 @@ Route::group([], function () {
     Route::get('/notification/register', Registration::class);
     Route::get('/upload-image', \App\Livewire\UploadImage::class)->name('upload-image');
     Route::post('/livewire/upload-file', [FileUploadController::class, 'store'])
-        ->middleware(config('livewire.temporary_file_upload.middleware'))
+        // ->middleware(config('livewire.temporary_file_upload.middleware'))
         ->name('livewire.upload-file');
 });
 
