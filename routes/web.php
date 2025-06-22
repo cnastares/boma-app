@@ -56,6 +56,7 @@ Route::group([], function () {
     Route::get('/profile/{slug}/{id}', ViewProfile::class)->name('view-profile');
     // Route::get('/location/{location}/{category}/{subcategory?}', AdList::class)->name('location-category');
     Route::get('/notification/register', Registration::class);
+    Route::get('/upload-image', \App\Livewire\UploadImage::class)->name('upload-image');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
