@@ -521,6 +521,15 @@ class VersionUpdate extends Page
                 $destinationPath = '.'; // Store directly in 'storage/app'
                 $newFileName = 'source-code.zip';
 
+                // Debugging information to trace storage parameters
+                $debugInfo = sprintf(
+                    'Storing file on disk %s at %s/%s',
+                    $disk,
+                    $destinationPath,
+                    $newFileName
+                );
+                $this->logMessage('Update Execution', $debugInfo);
+
                 // Store the uploaded file
                 Storage::disk($disk)->putFileAs($destinationPath, $tempFile, $newFileName);
                 $this->logMessage('Update Execution', 'New update file stored');

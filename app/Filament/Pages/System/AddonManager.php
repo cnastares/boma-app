@@ -187,6 +187,15 @@ class AddonManager extends Page implements HasTable
             $tempFile = $this->data['upload'][$fileIdentifier];
 
             $this->uploadProgress = 45;
+            // Debugging information to trace storage parameters
+            $debugInfo = sprintf(
+                'Storing addon on disk %s at %s/%s',
+                $disk,
+                $destinationPath,
+                $newFileName
+            );
+            $this->logMessage('Addon Upload', $debugInfo);
+
             // Store the uploaded file
             $zipPath = Storage::disk($disk)->putFileAs($destinationPath, $tempFile, $newFileName);
             $this->logMessage('Addon Upload', 'Addon ZIP file stored at ' . $zipPath);
