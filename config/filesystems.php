@@ -54,15 +54,10 @@ return [
 
         'media' => [
             'driver' => 'local',
-            'root'   => public_path('media'),
-            'url'    => env('APP_URL').'/media',
+            'root'   => storage_path('app/media'),
+            'url'    => env('APP_URL').'/storage/media',
+            'visibility' => 'public',
             'throw'  => false,
-            'permissions' => [
-                'dir' => [
-                    'public' => 0777,
-                    'private' => 0755,
-                ],
-            ],
         ],
 
         's3' => [
@@ -94,6 +89,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('media') => storage_path('app/media'),
     ],
 
 ];

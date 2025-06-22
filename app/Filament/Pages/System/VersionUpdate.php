@@ -473,6 +473,14 @@ class VersionUpdate extends Page
         $this->validate();
         // Check if an update file has been uploaded
         if (isset($this->data['upload']) && !empty($this->data['upload'])) {
+            $fileIdentifier = array_key_first($this->data['upload']);
+            $tempFile = $this->data['upload'][$fileIdentifier];
+            Log::debug('Livewire upload start', [
+                'originalName' => $tempFile->getClientOriginalName(),
+                'size' => $tempFile->getSize(),
+                'disk' => config('livewire.temporary_file_upload.disk'),
+                'directory' => config('livewire.temporary_file_upload.directory'),
+            ]);
 
             $this->uploadProgress = 0;
             // Notify the user that the process has started
@@ -510,9 +518,7 @@ class VersionUpdate extends Page
                     $this->logMessage('Update Execution', 'Existing update file deleted');
                 }
 
-                // Retrieve the uploaded file
-                $fileIdentifier = array_key_first($this->data['upload']);
-                $tempFile = $this->data['upload'][$fileIdentifier];
+                // Uploaded file was captured earlier
 
                 // Define storage parameters
                 $disk = 'local';
