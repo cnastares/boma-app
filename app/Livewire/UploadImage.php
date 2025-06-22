@@ -17,11 +17,15 @@ class UploadImage extends Component
     public function mount()
     {
         try {
-            Storage::disk('media')->put('disk_test.txt', 'test');
-            Storage::disk('media')->delete('disk_test.txt');
-            Log::info('UploadImage: media disk is writable');
+            // Accessing the disk without writing a file ensures we don't leave test
+            // artifacts behind while still confirming availability.
+            Storage::disk('media')->files('/');
+
+            Log::info('UploadImage: media disk accessible');
         } catch (\Exception $e) {
-            Log::error('UploadImage: media disk not accessible', ['error' => $e->getMessage()]);
+            Log::error('UploadImage: media disk not accessible', [
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
