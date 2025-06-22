@@ -72,5 +72,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'common' => CommonMiddleware::class,
+        'debug.upload' => \App\Http\Middleware\DebugFileUpload::class,
     ];
 }
