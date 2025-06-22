@@ -530,8 +530,18 @@ class VersionUpdate extends Page
                 );
                 $this->logMessage('Update Execution', $debugInfo);
 
-                // Store the uploaded file
-                Storage::disk($disk)->putFileAs($destinationPath, $tempFile, $newFileName);
+                // Store the uploaded file if the path is available
+                if (empty($tempFile->getRealPath())) {
+                    $this->uploadProgress = 0;
+                    $this->logMessage('Update Execution', 'Temporary file path missing');
+                    Notification::make()
+                        ->title('Failed to upload update file')
+                        ->danger()
+                        ->send();
+                    return;
+                }
+
+                Storage::disk($disk)->putFileAs($destinationPath ?: '.', $tempFile, $newFileName);
                 $this->logMessage('Update Execution', 'New update file stored');
                 $this->uploadProgress = 20;
                 // Execute the update process
