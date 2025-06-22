@@ -47,6 +47,7 @@ use App\Settings\UiCustomizationSettings;
 use App\Settings\VehicleRentalSettings;
 use App\Settings\WhatsappSettings;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -66,6 +67,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(MailManager $mailManager): void
     {
+        if (!Storage::disk('media')->exists('livewire-tmp')) {
+            Storage::disk('media')->makeDirectory('livewire-tmp');
+        }
         // Fetching active languages and mapping them to an array of language codes
         $activeLanguages = [];
         try {
