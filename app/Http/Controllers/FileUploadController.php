@@ -112,8 +112,38 @@ class FileUploadController extends Controller
         }
 
         try {
-            $path = $file->storePublicly('livewire-tmp', 'media');
-            Log::info('Upload exitoso', ['path' => $path]);
+            if (!$request->hasFile($fileFieldName)) {
+                Log::error('No se recibió archivo en la solicitud');
+                return response()->json([
+                    'errors' => [
+                        'file' => ['Archivo no proporcionado']
+                    ]
+                ], 400);
+            }
+
+            if (!$file->isValid()) {
+                Log::error('Archivo inválido');
+                return response()->json([
+                    'errors' => [
+                        'file' => ['Archivo inválido']
+                    ]
+                ], 422);
+            }
+
+            $filename = $file->getClientOriginalName();
+            if (!$filename) {
+                Log::error('Nombre de archivo no disponible');
+                return response()->json([
+                    'errors' => [
+                        'file' => ['Nombre de archivo no disponible']
+                    ]
+                ], 422);
+            }
+
+            $directory = 'livewire-tmp/' . date('Y/m/d');
+            $path = $file->storeAs($directory, $filename, 'media');
+
+            Log::info('Archivo subido correctamente', ['path' => $path]);
 
             return response()->json([
                 'path' => $path,
