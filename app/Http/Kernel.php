@@ -43,12 +43,14 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\CheckIfSuspended::class,
             \App\Http\Middleware\TrackTrafficSource::class,
             \App\Http\Middleware\StorePreviousUrl::class,
+            \App\Http\Middleware\RequestTracingMiddleware::class,
         ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\RequestTracingMiddleware::class,
         ],
     ];
 
@@ -73,5 +75,6 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'common' => CommonMiddleware::class,
         'debug.upload' => \App\Http\Middleware\DebugFileUpload::class,
+        'request.tracing' => \App\Http\Middleware\RequestTracingMiddleware::class,
     ];
 }

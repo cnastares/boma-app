@@ -6,6 +6,7 @@ use App\Models\Reservation\Cart;
 use App\Models\Reservation\Location;
 use App\Models\Reservation\TemporaryOrder;
 use App\Traits\Reservation\OrderHelperTraits;
+use App\Traits\LogsActivity;
 use App\Http\Controllers\Controller;
 use App\Settings\FlutterwaveSettings;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Http;
 
 class PaymentCallbackController extends Controller
 {
-    use OrderHelperTraits;
+    use OrderHelperTraits, LogsActivity;
 
     private $stripeSettings;
     private $paymongoSettings;
@@ -26,36 +27,116 @@ class PaymentCallbackController extends Controller
 
     public function stripe(Request $request, $temporaryOrderId)
     {
-        $this->stripeSettings = app(StripeSettings::class);
-        $transactionId = $request->get('payment_intent');
+        return $this->executeWithLogging($request, 'stripe', function ($traceId) use ($request, $temporaryOrderId) {
+            $this->stripeSettings = app(StripeSettings::class);
+            $transactionId = $request->get('payment_intent');
 
-        if ($transactionId && $this->verifyStripe($transactionId)['success']) {
-            $temporaryOrder = TemporaryOrder::where('user_id', auth()->id())
-                ->where('id', $temporaryOrderId)
-                ->firstOrFail(); // Use firstOrFail for better error handling
+            $this->logPaymentEvent($traceId, 'reservation_stripe_callback_received', [
+                'temporary_order_id' => $temporaryOrderId,
+                'payment_intent' => $transactionId,
+                'user_id' => auth()->id()
+            ]);
 
-            $carts = Cart::whereIn('id', $temporaryOrder->items)->get();
-            $shippingAddress = Location::find($temporaryOrder->shipping_address_id);
+            if (!$transactionId) {
+                $this->logWarning($traceId, 'stripe', 'Missing payment intent ID', [
+                    'temporary_order_id' => $temporaryOrderId
+                ]);
+                return redirect('/')->withErrors('Payment verification failed or transaction ID missing.');
+            }
 
-            $this->createOrder($carts, 'completed', 'stripe', $shippingAddress, $transactionId);
+            try {
+                $verificationResult = $this->verifyStripe($transactionId, $traceId);
+                
+                if (!$verificationResult['success']) {
+                    $this->logPaymentEvent($traceId, 'reservation_stripe_verification_failed', [
+                        'temporary_order_id' => $temporaryOrderId,
+                        'payment_intent' => $transactionId,
+                        'error' => $verificationResult['message'] ?? 'Unknown error'
+                    ]);
+                    return redirect('/')->withErrors('Payment verification failed or transaction ID missing.');
+                }
 
-            return redirect()->route('reservation.order-confirmation');
-        }
+                $temporaryOrder = TemporaryOrder::where('user_id', auth()->id())
+                    ->where('id', $temporaryOrderId)
+                    ->firstOrFail();
 
-        return redirect('/')->withErrors('Payment verification failed or transaction ID missing.');
+                $this->logPaymentEvent($traceId, 'temporary_order_found', [
+                    'temporary_order_id' => $temporaryOrderId,
+                    'items_count' => count($temporaryOrder->items),
+                    'shipping_address_id' => $temporaryOrder->shipping_address_id
+                ]);
+
+                $carts = Cart::whereIn('id', $temporaryOrder->items)->get();
+                $shippingAddress = Location::find($temporaryOrder->shipping_address_id);
+
+                $this->logPaymentEvent($traceId, 'creating_reservation_order', [
+                    'cart_items_count' => $carts->count(),
+                    'shipping_address_found' => $shippingAddress ? true : false,
+                    'payment_method' => 'stripe'
+                ]);
+
+                $this->createOrder($carts, 'completed', 'stripe', $shippingAddress, $transactionId);
+
+                $this->logPaymentEvent($traceId, 'reservation_order_created_successfully', [
+                    'payment_intent' => $transactionId,
+                    'temporary_order_id' => $temporaryOrderId
+                ]);
+
+                return redirect()->route('reservation.order-confirmation');
+
+            } catch (\Exception $e) {
+                $this->logPaymentEvent($traceId, 'reservation_stripe_processing_error', [
+                    'temporary_order_id' => $temporaryOrderId,
+                    'payment_intent' => $transactionId,
+                    'error' => $e->getMessage()
+                ]);
+                throw $e;
+            }
+        });
     }
 
 
-    private function verifyStripe($transactionId)
+    private function verifyStripe($transactionId, $traceId)
     {
-        $stripe = new \Stripe\StripeClient($this->stripeSettings->secret_key);
-        $payment = $stripe->paymentIntents->retrieve($transactionId, []);
+        try {
+            $this->logPaymentEvent($traceId, 'reservation_stripe_verification_start', [
+                'payment_intent' => $transactionId
+            ]);
 
-        if ($payment && $payment->status === 'succeeded') {
-            return ['success' => true, 'response' => $payment];
+            $stripe = new \Stripe\StripeClient($this->stripeSettings->secret_key);
+            $payment = $stripe->paymentIntents->retrieve($transactionId, []);
+
+            $this->logPaymentEvent($traceId, 'reservation_stripe_api_response', [
+                'payment_intent' => $transactionId,
+                'status' => $payment->status ?? 'unknown',
+                'amount' => $payment->amount ?? null,
+                'currency' => $payment->currency ?? null
+            ]);
+
+            if ($payment && $payment->status === 'succeeded') {
+                $this->logPaymentEvent($traceId, 'reservation_stripe_verification_success', [
+                    'payment_intent' => $transactionId,
+                    'amount' => $payment->amount,
+                    'currency' => $payment->currency
+                ]);
+                return ['success' => true, 'response' => $payment];
+            }
+
+            $this->logPaymentEvent($traceId, 'reservation_stripe_verification_failed', [
+                'payment_intent' => $transactionId,
+                'status' => $payment->status ?? 'unknown'
+            ]);
+
+            return ['success' => false, 'message' => __('messages.t_error_payment_failed')];
+
+        } catch (\Exception $e) {
+            $this->logPaymentEvent($traceId, 'reservation_stripe_verification_exception', [
+                'payment_intent' => $transactionId,
+                'error' => $e->getMessage()
+            ]);
+
+            return ['success' => false, 'message' => __('messages.t_error_payment_failed')];
         }
-
-        return ['success' => false, 'message' => __('messages.t_error_payment_failed')];
     }
 
     public function paypal(Request $request, $temporaryOrderId)

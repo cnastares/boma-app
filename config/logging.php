@@ -54,7 +54,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', 'security', 'payment', 'api'],
             'ignore_exceptions' => false,
         ],
 
@@ -125,6 +125,60 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        // Security-specific logging channel
+        'security' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/security.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 30, // Keep security logs longer
+            'replace_placeholders' => true,
+        ],
+
+        // Payment-specific logging channel
+        'payment' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/payment.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 90, // Keep payment logs for compliance
+            'replace_placeholders' => true,
+        ],
+
+        // API-specific logging channel
+        'api' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/api.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 14,
+            'replace_placeholders' => true,
+        ],
+
+        // File upload specific logging
+        'file_upload' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/file_upload.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'days' => 7,
+            'replace_placeholders' => true,
+        ],
+
+        // Performance monitoring
+        'performance' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/performance.log'),
+            'level' => env('LOG_LEVEL', 'warning'),
+            'days' => 7,
+            'replace_placeholders' => true,
+        ],
+
+        // Error tracking
+        'errors' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/errors.log'),
+            'level' => 'error',
+            'days' => 30,
+            'replace_placeholders' => true,
         ],
     ],
 
