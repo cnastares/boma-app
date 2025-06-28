@@ -86,11 +86,37 @@ class FileUploadController extends Controller
             Log::error('[FileUpload] Invalid file object received', [
                 'file_type' => gettype($file),
                 'file_class' => is_object($file) ? get_class($file) : 'not_object',
-                'file_value' => $file
+                'file_value' => is_array($file) ? 'array_with_' . count($file) . '_elements' : $file
             ]);
             return response()->json([
                 'errors' => [
-                    'file' => ['Invalid file object']
+                    'file' => ['Invalid file object - received ' . gettype($file)]
+                ]
+            ], 422);
+        }
+
+        // Additional validation for UploadedFile
+        if (!($file instanceof \Illuminate\Http\UploadedFile)) {
+            Log::error('[FileUpload] File is not an UploadedFile instance', [
+                'actual_class' => get_class($file),
+                'expected' => 'Illuminate\Http\UploadedFile'
+            ]);
+            return response()->json([
+                'errors' => [
+                    'file' => ['Invalid file type - not an UploadedFile instance']
+                ]
+            ], 422);
+        }
+
+        // Validate file path and temporary file
+        if (!$file->getPathname() || !file_exists($file->getPathname())) {
+            Log::error('[FileUpload] Invalid temporary file path', [
+                'pathname' => $file->getPathname(),
+                'exists' => $file->getPathname() ? file_exists($file->getPathname()) : 'no_pathname'
+            ]);
+            return response()->json([
+                'errors' => [
+                    'file' => ['Invalid temporary file - file not found on server']
                 ]
             ], 422);
         }
@@ -100,6 +126,8 @@ class FileUploadController extends Controller
             'name' => $file->getClientOriginalName(),
             'size' => $file->getSize(),
             'valid' => $file->isValid(),
+            'pathname' => $file->getPathname(),
+            'temp_exists' => file_exists($file->getPathname())
         ]);
 
         if (!$file->isValid() || !$file->getClientOriginalName()) {
@@ -140,16 +168,52 @@ class FileUploadController extends Controller
                 ], 422);
             }
 
-            $directory = 'livewire-tmp/' . date('Y/m/d');
-            $path = $file->storeAs($directory, $filename, 'media');
+            // Use the livewire-tmp directory directly without date subdirectories
+            $directory = 'livewire-tmp';
 
-            Log::info('Archivo subido correctamente', ['path' => $path]);
+            // Ensure the directory exists in the media disk
+            $disk = Storage::disk('media');
+            if (!$disk->exists($directory)) {
+                $disk->makeDirectory($directory);
+                Log::info('[FileUpload] Created directory', ['directory' => $directory]);
+            }
+
+            // Use move instead of storeAs to avoid path issues
+            $uniqueFilename = time() . '_' . uniqid() . '_' . $filename;
+            $fullPath = $directory . '/' . $uniqueFilename;
+
+            // Copy the file using the disk's put method
+            $fileContents = file_get_contents($file->getPathname());
+            if ($fileContents === false) {
+                throw new \Exception('Could not read temporary file contents');
+            }
+
+            $stored = $disk->put($fullPath, $fileContents);
+
+            if (!$stored) {
+                throw new \Exception('Failed to store file on disk');
+            }
+
+            // Verify the file was actually stored
+            if (!$disk->exists($fullPath)) {
+                Log::error('[FileUpload] File storage failed - file not found after storage', [
+                    'path' => $fullPath,
+                    'directory' => $directory,
+                    'filename' => $uniqueFilename
+                ]);
+                throw new \Exception('File storage failed - file not found after storage');
+            }
+
+            Log::info('Archivo subido correctamente', ['path' => $fullPath]);
 
             return response()->json([
-                'path' => $path,
+                'paths' => [$fullPath]
             ]);
         } catch (\Exception $e) {
-            Log::error('[FileUpload] Storage error', ['error' => $e->getMessage()]);
+            Log::error('[FileUpload] Storage error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json([
                 'errors' => [
                     'file' => ['Error storing file: ' . $e->getMessage()]
