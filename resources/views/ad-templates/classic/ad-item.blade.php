@@ -1,8 +1,7 @@
 <a href="{{ route('ad.overview', ['slug' => $ad->slug, 'ref' => $ref]) }}"
     aria-label="{{$ad->title}}"
     class="w-full shadow-sm flex-none bg-white rounded-xl hover:shadow-md  dark:bg-gray-900 classic:border-black classic:border {{$homeSettings->enable_hover_animation?'classic-hover-shadow':''}} relative flex flex-col md:pb-0 pb-[2.5rem] border dark:border-white/10" aria-label="{{$ad->title}}" wire:click="saveClicks">
-
-    <div class="pb-0 p-2 md:p-3  md:pb-0 relative  md:w-auto md:h-auto flex-none">
+    <div class="pb-0 p-0 md:p-0 md:pb-0 relative flex-none overflow-hidden w-full h-[14.125rem] rounded-t-lg">
         <div class="absolute top-4 right-4 z-[1] {{!$isFavourited?' rounded-full':''}}">
             <x-ad.favourite-ad :$isFavourited />
         </div>
@@ -37,7 +36,7 @@
         $altText = $imageProperties['1'] ?? $ad->title;
         @endphp
         <img src="{{ $ad->primaryImage ?? asset('/images/placeholder.jpg') }}" alt="{{ $altText }}"
-            class="aspect-square object-cover h-32 flex w-full md:h-[12rem] rounded-xl">
+            class="w-full h-full object-cover">
     </div>
 
     <div class="flex-grow flex flex-col">
@@ -57,13 +56,14 @@
                 </div>
                 @endunless
                 @unless ($ad?->adType?->disable_location && $ad->location_name)
-                <div class="flex items-center mb-2 text-sm ">
-                    <x-icon-pin-location class="w-5 h-5 dark:text-gray-500" />
-                    <span class="font-light ml-1 line-clamp-1">{{ $ad->location_name }}</span>
+                <div class="flex items-center justify-between mb-2 text-xs ">
+                    <div class="flex items-center">
+                        <x-icon-pin-location class="w-4 h-4 dark:text-gray-500" />
+                        <span class="font-light ml-1 line-clamp-1">{{ $ad->location_name }}</span>
+                    </div>
+                    <span class="text-muted dark:text-gray-400 text-xs">{{ \Carbon\Carbon::parse($ad->posted_date)->translatedFormat('M j') }}</span>
                 </div>
                 @endunless
-                <span
-                    class=" md:block text-muted dark:text-gray-400 text-sm">{{ \Carbon\Carbon::parse($ad->posted_date)->translatedFormat('M j') }}</span>
             </div>
         </div>
 

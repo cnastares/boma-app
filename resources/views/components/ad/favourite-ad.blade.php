@@ -19,9 +19,11 @@ aria-label="{{ $isFavourited ? __('messages.t_aria_label_favourited') : __('mess
 
     @else
         @if($isFavourited)
-        <x-icon-solid-heart-circle class="md:w-12 md:h-12" aria-hidden="true" />
+        {{-- <x-icon-solid-heart-circle class="md:w-6 md:h-6" aria-hidden="true" /> --}}
+        <x-icon-solid-heart-circle class="w-6 h-6" aria-hidden="true" />
         @else
-        <x-icon-heart class="md:w-11 md:h-11 dark:text-gray-400" aria-hidden="true" />
+        {{-- <x-icon-heart class="md:w-6 md:h-6 dark:text-gray-400" aria-hidden="true" /> --}}
+        <x-icon-heart class="w-6 h-6 dark:text-gray-400" aria-hidden="true" />
         @endif
     @endif
 </button>
