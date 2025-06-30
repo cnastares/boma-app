@@ -620,6 +620,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- Bidirectional Reviews Section -->
+        <div class="container mx-auto px-4 py-8">
+            <livewire:bidirectional-reviews-section :ad="$this->ad" />
+        </div>
+
         @if (!$relatedAds->isEmpty())
             <section class=" pt-6 pb-10 md:pb-6">
                 <div class="container mx-auto px-4">

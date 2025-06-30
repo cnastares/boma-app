@@ -438,6 +438,54 @@ class BaseAdModel extends Model implements Sitemapable, HasMedia
         return $this->morphMany(CustomerReview::class, 'reviewable');
     }
 
+    /**
+     * Reseñas bidireccionales para este anuncio
+     */
+    public function reviews()
+    {
+        return $this->hasMany(\App\Models\Review::class);
+    }
+
+    /**
+     * Reseñas de clientes para este anuncio
+     */
+    public function clientReviews()
+    {
+        return $this->reviews()->where('reviewer_type', 'client');
+    }
+
+    /**
+     * Reseñas de proveedores para este anuncio
+     */
+    public function providerReviews()
+    {
+        return $this->reviews()->where('reviewer_type', 'provider');
+    }
+
+    /**
+     * Reseñas aprobadas para este anuncio
+     */
+    public function approvedReviews()
+    {
+        return $this->reviews()->where('status', 'approved');
+    }
+
+    /**
+     * Obtener el rating promedio del anuncio
+     */
+    public function getAverageRatingAttribute()
+    {
+        return $this->approvedReviews()->where('reviewer_type', 'client')->avg('rating') ?? 0;
+    }
+
+    /**
+     * Obtener el total de reseñas del anuncio
+     */
+    public function getTotalReviewsAttribute()
+    {
+        return $this->approvedReviews()->where('reviewer_type', 'client')->count();
+    }
+
     public function vehicleBooking()
     {
         return $this->hasMany(\Adfox\VehicleRentalMarketplace\Models\VehicleCarBooking::class, 'ad_id', 'id');

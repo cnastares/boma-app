@@ -150,6 +150,11 @@
             </div>
         </div>
 
+        <!-- Bidirectional Reviews Section -->
+        <div class="container mx-auto md:px-4 mt-8">
+            <livewire:bidirectional-reviews-section :ad="$this->ad" />
+        </div>
+
         <!-- Related Ads -->
         @include('livewire.ad-type.ad-details._parties.related-ads')
     </div>
